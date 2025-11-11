@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
 import Game from './Game';
+import Register from './Register';
 
 const navLinkStyles = ({ isActive }) => ({
   color: isActive ? '#007bff' : '#333',
@@ -31,6 +32,7 @@ function App() {
           </ProtectedRoute>
         } />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );

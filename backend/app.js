@@ -1,24 +1,38 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const session = require('express-session');
 const cors = require('cors');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret';
 const port = 8080;
+const originPort = 5173;
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors({ 
+  origin: `http://localhost:${originPort}`,
+  credentials: true
+}));
 
-const hashed = bcrypt.hashSync('secret', 10);
-const users = [{ username: 'alan', password: hashed }];
+app.use(session({
+    secret: 'gfg-key',
+    resave: false,
+    saveUninitialized: true
+}));
+
+const temp = bcrypt.hashSync('secret', 10);
+const users = [{ username: 'alan', password: temp }];
 
 app.post('/api/register', async (req, res) => {
-    const { username, password } = req.body;
-    if (!username || !password) {
+    const { username, password, confirmPassword } = req.body;
+    if (!username || !password || !confirmPassword) {
         return res.status(400).json({
           error: 'username & password required'
         });
+    }
+    if (password !== confirmPassword) {
+      return res.status(400).json({
+        error: 'password must match confirmPassword'
+      });
     }
     if (users.find(u => u.username === username)) {
         return res.status(400).json({
@@ -27,56 +41,53 @@ app.post('/api/register', async (req, res) => {
     }
     const hashed = await bcrypt.hash(password, 10);
     users.push({ username, password: hashed });
-    return res.json({ message: 'registered' });
+
+    req.session.user = {
+      username: username
+    }
+    return res.json({ message: 'Registration successful' });
 });
 
-// login route 
 app.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
   const user = users.find(u => u.username === username);
   if (!user) {
     return res.status(400).json({
-      error: 'invalid credentials'
+      error: 'Invalid credentials'
     });
   }
 
   const ok = await bcrypt.compare(password, user.password);
-
   if (!ok) {
     return res.status(400).json({
-      error: 'invalid credentials'
+      error: 'Invalid credentials'
     });
   }
 
-  const token = jwt.sign(
-    { username }, JWT_SECRET, { expiresIn: '1h' }
-  );
-  return res.json({ token });
+  req.session.user = {
+    username: user.username
+  }
+  res.json({ message: 'Login successful' });
 });
 
 function authMiddleware(req, res, next) {
-  const auth = req.headers.authorization;
-  if (!auth) {
-    return res.status(401).json({
-      error: 'no auth'
-    });
+  if (!req.session.user) {
+    return res.status(401).json({ error: 'Not logged in' });
   }
-  const token = auth.split(' ')[1];
-  try {
-    req.user = jwt.verify(token, JWT_SECRET);
-    next();
-  } catch (e) {
-    return res.status(401).json({
-      error: 'invalid token'
-    });
-  }
+  next();
 };
 
 app.get('/api/protected', authMiddleware, (req, res) => {
-  res.json({ hello: req.user.username });
+  res.json({ hello: req.session.user.username });
+});
+
+app.get('/api/check-session', (req, res) => {
+  if (req.session.user) {
+    return res.json({ loggedIn: true, user: req.session.user });
+  }
+  res.json({ loggedIn: false })
 });
 
 app.listen(port, () => {
-  console.log(`Server on ${port}`);
-  // console.log(`http://localhost:${port}`);
+  console.log(`Server on http://localhost:${port}`);
 });

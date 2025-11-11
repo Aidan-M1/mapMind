@@ -7,6 +7,7 @@ export default function Login() {
         username: '',
         password: ''
     });
+    const [error, setError] = useState('');
     const navigate = useNavigate();
   
     const handleChange = (e) => {
@@ -17,36 +18,48 @@ export default function Login() {
   
     const handleSubmit = async (e) => {
       e.preventDefault();
+      setError('');
       try {
         const res = await axios.post(
-            "http://localhost:8080/api/login", { username: inputs.username, password: inputs.password }
+            "http://localhost:8080/api/login", 
+            { username: inputs.username, password: inputs.password },
+            { withCredentials: true }
         );
-        localStorage.setItem('token', res.data.token);
+
         navigate('/game');
       } catch (err) {
-        alert(err.response?.data?.error || 'Login failed');
+        setError(err.response?.data?.error || 'Login failed');
       }
+    }
+
+    const clickRegister = () => {
+      navigate('/register')
     }
   
     return (
-      <form onSubmit ={handleSubmit}>
-        <label>Username:
-          <input 
-            type="text"
-            name="username"
-            value={inputs.username}
-            onChange={handleChange}
-          />
-        </label>
-        <label>Password:
-          <input 
-            type="password"
-            name="password"
-            value={inputs.password}
-            onChange={handleChange}
-          />
-        </label>
-        <input type="submit" />
-      </form>
+      <>
+        <h1>Login</h1>
+        <form onSubmit ={handleSubmit}>
+          <label>Username:
+            <input 
+              type="text"
+              name="username"
+              value={inputs.username}
+              onChange={handleChange}
+            />
+          </label>
+          <label>Password:
+            <input 
+              type="password"
+              name="password"
+              value={inputs.password}
+              onChange={handleChange}
+            />
+          </label>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          <input type="submit" value="Login"/>
+        </form>
+        <p>Don't have an account? <button onClick={clickRegister}>Register Here</button></p>
+      </>
     )
   }
