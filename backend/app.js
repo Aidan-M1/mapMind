@@ -16,7 +16,11 @@ app.use(cors({
 app.use(session({
     secret: 'gfg-key',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 // 1 day
+    },
+    rolling: true,
 }));
 
 const temp = bcrypt.hashSync('secret', 10);
