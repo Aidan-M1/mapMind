@@ -39,7 +39,7 @@ export default function Register() {
             },
             { withCredentials: true }
         );
-        navigate('/game');
+        navigate('/login');
       } catch (err) {
         setError(err.response?.data?.error || 'Registration failed');
       }
