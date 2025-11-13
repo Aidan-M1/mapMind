@@ -3,6 +3,7 @@ import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
 import Game from './Game';
 import Register from './Register';
+import Home from './Home';
 
 const navLinkStyles = ({ isActive }) => ({
   color: isActive ? '#007bff' : '#333',
@@ -10,10 +11,6 @@ const navLinkStyles = ({ isActive }) => ({
   fontWeight: isActive ? 'bold' : 'normal',
   padding: '5px 10px'
 });
-
-function Home() {
-  return <h1>Home</h1>;
-}
 
 function App() {
   return (
