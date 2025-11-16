@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from './context/AuthContext';
 
 export default function Login() {
     const [inputs, setInputs] = useState({
@@ -9,6 +10,7 @@ export default function Login() {
     });
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { setLoggedIn } = useContext(AuthContext);
   
     const handleChange = (e) => {
       const name = e.target.name;
@@ -25,7 +27,7 @@ export default function Login() {
             { username: inputs.username, password: inputs.password },
             { withCredentials: true }
         );
-
+        setLoggedIn(true)
         navigate('/game');
       } catch (err) {
         setError(err.response?.data?.error || 'Login failed');

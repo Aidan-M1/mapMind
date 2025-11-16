@@ -1,25 +1,8 @@
-import { useEffect, useState } from "react";
+// import { useContext } from "react";
+// import AuthContext from "../context/AuthContext";
 
-export default function useAuth() {
-    const [authChecked, setAuthChecked] = useState(false);
-    const [loggedIn, setLoggedIn] = useState(false);
-    
-    useEffect(() => {
-        const checkSession = async () => {
-            try {
-                const res = await axios.get(
-                    'http://localhost:8080/api/check-session', 
-                    { withCredentials: true }
-                );
-                setLoggedIn(res.data.loggedIn);
-            } catch (err) {
-                setLoggedIn(false);
-            } finally {
-                setAuthChecked(true);
-            }
-        };
-        checkSession();
-    }, []);
+// export default function useAuth() {
+//     const { authChecked, loggedIn } = useContext(AuthContext);
 
-    return { authChecked, loggedIn }
-}
+
+// }

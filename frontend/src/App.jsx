@@ -4,6 +4,8 @@ import ProtectedRoute from './ProtectedRoute';
 import Game from './Game';
 import Register from './Register';
 import Home from './Home';
+import { useContext } from 'react';
+import { AuthContext } from './context/AuthContext';
 
 const navLinkStyles = ({ isActive }) => ({
   color: isActive ? '#007bff' : '#333',
@@ -12,13 +14,21 @@ const navLinkStyles = ({ isActive }) => ({
   padding: '5px 10px'
 });
 
+
 function App() {
+  const { loggedIn } = useContext(AuthContext);
+
   return (
     <BrowserRouter>
+
       <nav style={{ marginBottom: '20px' }}>
-        <NavLink to="/" style={navLinkStyles}>Home</NavLink> |{" "}
-        <NavLink to="/game" style={navLinkStyles}>Game</NavLink> |{" "}
-        <NavLink to="/login" style={navLinkStyles}>Login</NavLink>
+        <NavLink to="/" style={navLinkStyles}>Home</NavLink>
+        |{" "}<NavLink to="/game" style={navLinkStyles}>Game</NavLink>
+        {!loggedIn && (
+          <>
+          |{" "}<NavLink to="/login" style={navLinkStyles}>Login</NavLink>
+          </>
+        )}
       </nav>
 
       <Routes>
@@ -31,6 +41,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
+      
     </BrowserRouter>
   );
 }
