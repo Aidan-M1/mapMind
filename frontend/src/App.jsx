@@ -1,11 +1,14 @@
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from './context/AuthContext';
+
 import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
 import Game from './Game';
 import Register from './Register';
 import Home from './Home';
-import { useContext } from 'react';
-import { AuthContext } from './context/AuthContext';
+import Profile from './Profile';
+
 
 const navLinkStyles = ({ isActive }) => ({
   color: isActive ? '#007bff' : '#333',
@@ -29,6 +32,11 @@ function App() {
           |{" "}<NavLink to="/login" style={navLinkStyles}>Login</NavLink>
           </>
         )}
+        {loggedIn && (
+          <>
+          |{" "}<NavLink to="/profile" style={navLinkStyles}>Profile</NavLink>
+          </>
+        )}
       </nav>
 
       <Routes>
@@ -40,6 +48,11 @@ function App() {
         } />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } />
       </Routes>
       
     </BrowserRouter>

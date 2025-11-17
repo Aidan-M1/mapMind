@@ -35,7 +35,7 @@ export default function Login() {
     }
 
     const clickRegister = () => {
-      navigate('/register')
+      navigate('/register');
     }
   
     return (

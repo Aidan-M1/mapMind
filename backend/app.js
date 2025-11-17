@@ -137,6 +137,16 @@ app.get('/api/check-session', (req, res) => {
   res.json({ loggedIn: false })
 });
 
+app.post('/api/logout', (req, res) => {
+  req.session.destroy(err=>{
+    if (err) {
+      return res.status(500).send("Could not log out.");
+    }
+    res.clearCookie('connect.sid');
+    return res.json({ success: true });
+  })
+});
+
 app.listen(port, () => {
   console.log(`Server on http://localhost:${port}`);
 });
