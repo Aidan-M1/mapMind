@@ -10,32 +10,25 @@ import Home from './Home';
 import Profile from './Profile';
 
 
-const navLinkStyles = ({ isActive }) => ({
-  color: isActive ? '#007bff' : '#333',
-  textDecoration: isActive ? 'none' : 'underline',
-  fontWeight: isActive ? 'bold' : 'normal',
-  padding: '5px 10px'
-});
-
-
 function App() {
   const { loggedIn } = useContext(AuthContext);
 
   return (
     <BrowserRouter>
 
-      <nav style={{ marginBottom: '20px' }}>
-        <NavLink to="/" style={navLinkStyles}>Home</NavLink>
-        |{" "}<NavLink to="/game" style={navLinkStyles}>Game</NavLink>
+      <header>
+        <h1>Geography Game</h1>
+      </header>
+
+      <nav>    
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/game">Game</NavLink>
+
         {!loggedIn && (
-          <>
-          |{" "}<NavLink to="/login" style={navLinkStyles}>Login</NavLink>
-          </>
+          <NavLink to="/login">Login</NavLink>
         )}
         {loggedIn && (
-          <>
-          |{" "}<NavLink to="/profile" style={navLinkStyles}>Profile</NavLink>
-          </>
+          <NavLink to="/profile">Profile</NavLink>
         )}
       </nav>
 
@@ -54,6 +47,10 @@ function App() {
           </ProtectedRoute>
         } />
       </Routes>
+
+      <footer>
+        <h3>Footer</h3>
+      </footer>
       
     </BrowserRouter>
   );

@@ -50,8 +50,8 @@ export default function Register() {
   
     return (
       <>
-        <h1>Register</h1>
-        <form onSubmit ={handleSubmit}>
+        <h2>Register</h2>
+        <form onSubmit ={handleSubmit} className="container">
             <label>Username:
             <input 
                 type="text"

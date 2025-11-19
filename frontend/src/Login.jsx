@@ -40,28 +40,29 @@ export default function Login() {
   
     return (
       <>
-        <h1>Login</h1>
-        <form onSubmit ={handleSubmit}>
-          <label>Username:
+        <h2>Login</h2>
+        <div className="container">
+          <form onSubmit ={handleSubmit}>
+            <label>Username:</label>
             <input 
               type="text"
               name="username"
               value={inputs.username}
               onChange={handleChange}
             />
-          </label>
-          <label>Password:
+            <label>Password:</label>
             <input 
               type="password"
               name="password"
               value={inputs.password}
               onChange={handleChange}
             />
-          </label>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-          <input type="submit" value="Login"/>
-        </form>
-        <p>Don't have an account? <button onClick={clickRegister}>Register Here</button></p>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            <input type="submit" value="Login"/>
+          </form>
+          <p>Don't have an account?</p>
+          <button onClick={clickRegister}>Register Here</button>
+        </div>
       </>
     )
   }

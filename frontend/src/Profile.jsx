@@ -25,9 +25,11 @@ export default function Profile() {
     return (
         <>
             <h1>Profile</h1>
-            <p>Hello Username</p>
-            <button onClick={clickLogOut}>Logout</button>
-            {error && <p style={{color: 'red'}}>{error}</p>}
+            <div className='container'>
+                <p>Hello Username</p>
+                <button onClick={clickLogOut}>Logout</button>
+                {error && <p style={{color: 'red'}}>{error}</p>}
+            </div>
         </>
     )
 }

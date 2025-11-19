@@ -10,5 +10,5 @@ export default function Game() {
     .then(r => setMsg(r.data.hello))
     .catch(() => setMsg('error'));
   }, [])
-  return <div>Protected message: {msg}</div>;
+  return <div className="container">Protected message: {msg}</div>;
 }
