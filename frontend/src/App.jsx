@@ -21,15 +21,18 @@ function App() {
       </header>
 
       <nav>    
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/game">Game</NavLink>
-
-        {!loggedIn && (
-          <NavLink to="/login">Login</NavLink>
-        )}
-        {loggedIn && (
-          <NavLink to="/profile">Profile</NavLink>
-        )}
+        <div className='left-links'>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/game">Game</NavLink>
+        </div>
+        <div className='right-links'>
+          {!loggedIn && (
+            <NavLink to="/login">Login</NavLink>
+          )}
+          {loggedIn && (
+            <NavLink to="/profile">Profile</NavLink>
+          )}
+        </div>
       </nav>
 
       <Routes>
