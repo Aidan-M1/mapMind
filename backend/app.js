@@ -16,34 +16,28 @@ app.use(cors({
 }));
 
 app.use(session({
-    secret: 'gfg-key',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24 // 1 day
-    },
-    rolling: true,
+  secret: 'gfg-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 // 1 day
+  },
+  rolling: true,
 }));
 
 let db = new sqlite3.Database("./database.db" , (err) => {
-    if(err)
-    {
-        console.log("Error opening database:" + err.message);
-    }
-    else
-    {
-        console.log("DataBase Connected");
-    }
+  if(err)
+  {
+      console.log("Error opening database:" + err.message);
+  }
+  else
+  {
+      console.log("DataBase Connected");
+  }
 });
 
 const dbGet = promisify(db.get).bind(db);
 const dbRun = promisify(db.run).bind(db);
-
-db.run(`CREATE TABLE IF NOT EXISTS users (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  username TEXT,
-  password TEXT
-)`);
 
 app.post('/api/register', async (req, res) => {
   const { username, password, confirmPassword } = req.body;
