@@ -1,12 +1,11 @@
 import axios from 'axios';
 import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 
 export default function Profile() {
     const [error, setError] = useState('');
-    const { setLoggedIn } = useContext(AuthContext);
-    const navigate = useNavigate();
+
+    const { username, setLoggedIn } = useContext(AuthContext);
 
     const clickLogOut = async () => {
         setError('');
@@ -26,7 +25,7 @@ export default function Profile() {
         <>
             <h1>Profile</h1>
             <div className='container'>
-                <p>Hello Username</p>
+                <p>Hello { username } </p>
                 <button onClick={clickLogOut}>Logout</button>
                 {error && <p style={{color: 'red'}}>{error}</p>}
             </div>

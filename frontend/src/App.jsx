@@ -11,7 +11,7 @@ import Profile from './pages/Profile';
 
 
 function App() {
-  const { loggedIn } = useContext(AuthContext);
+  const { loggedIn, username } = useContext(AuthContext);
 
   return (
     <BrowserRouter>
@@ -30,7 +30,7 @@ function App() {
             <NavLink to="/login">Login</NavLink>
           )}
           {loggedIn && (
-            <NavLink to="/profile">Profile</NavLink>
+            <NavLink to="/profile">{ username }</NavLink>
           )}
         </div>
       </nav>

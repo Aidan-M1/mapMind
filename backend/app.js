@@ -20,7 +20,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24 // 1 day
+    maxAge: 1000 * 60 * 60 * 24, // 1 day
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax"
   },
   rolling: true,
 }));
@@ -120,15 +123,16 @@ function authMiddleware(req, res, next) {
   next();
 };
 
-app.get('/api/protected', authMiddleware, (req, res) => {
-  res.json({ hello: req.session.user.username });
-});
-
 app.get('/api/check-session', (req, res) => {
   if (req.session.user) {
-    return res.json({ loggedIn: true, user: req.session.user });
+    return res.json({
+      loggedIn: true,
+      username: req.session.user.username
+    });
   }
-  res.json({ loggedIn: false })
+  res.json({
+    loggedIn: false,
+  })
 });
 
 app.post('/api/logout', (req, res) => {

@@ -116,3 +116,7 @@ input[type=reset]:hover,
 button:hover {
   background-color: #336B3C;
 }
+
+.leaflet-container {
+  height: 600px;
+}
