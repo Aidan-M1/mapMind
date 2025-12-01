@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import { useContext } from 'react';
-import { AuthContext } from './context/AuthContext';
+import { AuthContext } from './contexts/AuthContext';
 
-import Login from './Login';
+import Login from './pages/Login';
 import ProtectedRoute from './ProtectedRoute';
-import Game from './Game';
-import Register from './Register';
-import Home from './Home';
-import Profile from './Profile';
+import Game from './pages/Game';
+import Register from './pages/Register';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
 
 
 function App() {
