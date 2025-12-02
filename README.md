@@ -16,10 +16,10 @@ This project consists of a react.js frontend and an express.js backend. The aim 
 2. A scalable map implemented with leaflet, map layer provided by openstreetmap.org
 
 ### Planned Features
-1. An interactive world map that provides the users with country names on click using the World_Countries GeoJSON file.
-2. A world map quiz where users are provided woth a country name and must click on the correct country.
+1. An interactive world map based on the World_Countries GeoJSON file.
+2. A world map quiz.
 3. Continent maps.
-4. Country maps that provide information on the regions of that country.
+4. Country maps with detailed information.
 5. Other quizzes (flags, cities, mountains).
 6. User progress tracking.
 7. Multiplayer vs quizzes.
